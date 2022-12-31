@@ -12,7 +12,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState("");
+  const [selectedCard, setSelectedCard] = React.useState({});
   const [imagePopupOpen, setImagePopupOpen] = React.useState(false);
 
   function handleCardClick(data) {
@@ -37,7 +37,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setImagePopupOpen(false);
-    setSelectedCard("");
+    setSelectedCard({});
   }
   return (
     <div className="page">
@@ -55,21 +55,78 @@ function App() {
         title={"Редактируйте профиль"}
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-      />
+        buttonText={"Сохранить"}
+      >
+        <input
+          class="popup__input popup__input_type_name"
+          type="text"
+          name="name"
+          placeholder="Имя"
+          value=""
+          required
+          minlength="2"
+          maxlength="40"
+          id="inputName"
+        />
+        <input
+          class="popup__input popup__input_type_subname"
+          type="text"
+          name="link"
+          value=""
+          placeholder="Предназначение"
+          required
+          minlength="2"
+          maxlength="200"
+          id="inputSubname"
+        />
+      </PopupWithForm>
 
       <PopupWithForm
         name={"card"}
         title={"Добавьте место"}
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
-      />
+        buttonText={"Добавить"}
+      >
+        <input
+          class="popup__input popup__input_type_card-name"
+          type="text"
+          name="name"
+          placeholder="Название"
+          value=""
+          required
+          minlength="2"
+          maxlength="30"
+          id="inputCard"
+        />
+        <input
+          class="popup__input popup__input_type_link"
+          type="url"
+          name="link"
+          value=""
+          placeholder="Ссылка на картинку"
+          required
+          id="inputLink"
+        />
+      </PopupWithForm>
 
       <PopupWithForm
         name={"avatar"}
         title={"Редактируйте аватар"}
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-      />
+        buttonText={"Сохранить"}
+      >
+        <input
+          class="popup__input popup__input_type_avatar-link"
+          type="url"
+          name="avatar"
+          placeholder="Ссылка на аватар"
+          value=""
+          required
+          id="inputAvatar"
+        />
+      </PopupWithForm>
 
       <ImagePopup
         card={selectedCard}
