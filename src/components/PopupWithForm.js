@@ -8,7 +8,6 @@ function PopupWithForm({
   onSubmit,
 }) {
   return (
-    <>
       <div
         className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
       >
@@ -37,7 +36,6 @@ function PopupWithForm({
           </form>
         </div>
       </div>
-    </>
   );
 }
 

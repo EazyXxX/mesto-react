@@ -1,4 +1,5 @@
 import React from "react";
+import {useEffect, useState} from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -12,18 +13,18 @@ import AddPlacePopup from "./AddPlacePopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+    useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
+    useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [imagePopupOpen, setImagePopupOpen] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [selectedCard, setSelectedCard] = useState({});
+  const [imagePopupOpen, setImagePopupOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cardData]) => {
         setCurrentUser(userData);
@@ -82,10 +83,9 @@ function App() {
 
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
-      setCards((cards) => cards.filter((c) => c._id !== card._id)).catch(
-        (err) => console.log(err)
-      );
-    });
+      setCards((cards) => cards.filter((c) => c._id !== card._id))
+    })
+    .catch((err) => console.log(err));
   }
 
   function handleUpdateUser(data) {

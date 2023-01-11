@@ -1,10 +1,11 @@
 import React from "react";
+import {useEffect, useState} from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarProfile({ isOpen, onClose, onUpdateAvatar }) {
-  const [avatar, setAvatar] = React.useState({});
+  const [avatar, setAvatar] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAvatar("");
   }, [isOpen]);
 
