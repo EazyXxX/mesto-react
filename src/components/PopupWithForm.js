@@ -1,4 +1,12 @@
-function PopupWithForm({ name, title, children, isOpen, onClose, buttonText }) {
+function PopupWithForm({
+  name,
+  title,
+  children,
+  isOpen,
+  onClose,
+  buttonText,
+  onSubmit,
+}) {
   return (
     <>
       <div
@@ -14,8 +22,9 @@ function PopupWithForm({ name, title, children, isOpen, onClose, buttonText }) {
           <h2 className="popup__header">{title}</h2>
           <form
             className={`popup__form popup__form_type_${name}`}
-            id={name}
+            id={`${name}"Form"`}
             name="popupFormEdit"
+            onSubmit={onSubmit}
           >
             {children}
             <button

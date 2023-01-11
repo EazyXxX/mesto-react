@@ -1,24 +1,17 @@
 import React from "react";
-import {useEffect, useState} from 'react';
-import api from "../utils/Api.js";
 import Card from "./Card";
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, cardData]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-        setCards(cardData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+  cards,
+}) {
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main>
@@ -31,17 +24,17 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         ></button>
         <img
           className="profile__avatar"
-          style={{ backgroundImage: `url(${userAvatar})` }}
+          style={{ backgroundImage: `url(${currentUser.avatar})` }}
         />
         <div className="profile__info">
-          <h1 className="profile__name">{userName}</h1>
+          <h1 className="profile__name">{currentUser.name}</h1>
           <button
             type="button"
             className="profile__edit-button"
             aria-label="open"
             onClick={onEditProfile}
           ></button>
-          <p className="profile__description">{userDescription}</p>
+          <p className="profile__description">{currentUser.about}</p>
         </div>
         <button
           className="profile__plus-button"
@@ -61,6 +54,8 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
               link={card.link}
               likes={card.likes.length}
               onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           ))}
         </ul>
