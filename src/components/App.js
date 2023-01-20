@@ -1,5 +1,5 @@
 import React from "react";
-import {useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -12,11 +12,9 @@ import EditAvatarProfile from "./EditAvatarProfile.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
@@ -48,6 +46,23 @@ function App() {
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
+  }
+
+  function handleOverlayClose(e) {
+    if (
+      e.target === e.currentTarget ||
+      e.target.classList.contains("popup__cross-button")
+    ) {
+      closeAllPopups();
+    }
+  }
+
+  function handleEscClose({key}) {
+    switch(key) {
+      case 'Escape':
+        closeAllPopups()
+        break
+    }
   }
 
   function closeAllPopups() {
@@ -82,10 +97,12 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards((cards) => cards.filter((c) => c._id !== card._id))
-    })
-    .catch((err) => console.log(err));
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleUpdateUser(data) {
@@ -119,7 +136,8 @@ function App() {
   }
 
   return (
-    <div className="page">
+    <div className="page"
+    >
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main
@@ -137,24 +155,32 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          overlayClick={handleOverlayClose}
+          onEscPress={handleEscClose}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleUpdateAddCard}
+          overlayClick={handleOverlayClose}
+          onEscPress={handleEscClose}
         />
 
         <EditAvatarProfile
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          overlayClick={handleOverlayClose}
+          onEscPress={handleEscClose}
         />
 
         <ImagePopup
           card={selectedCard}
           isOpen={imagePopupOpen}
           onClose={closeAllPopups}
+          overlayClick={handleOverlayClose}
+          onEscPress={handleEscClose}
         />
       </CurrentUserContext.Provider>
     </div>

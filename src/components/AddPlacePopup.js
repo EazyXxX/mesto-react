@@ -1,8 +1,14 @@
 import React from "react";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({
+  isOpen,
+  onClose,
+  onAddPlace,
+  overlayClick,
+  onEscPress,
+}) {
   const [nameCard, setNameCard] = useState("");
   const [link, setLink] = useState("");
 
@@ -35,6 +41,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText={"Добавить"}
+      overlayClick={overlayClick}
+      onEscPress={onEscPress}
     >
       <input
         className="popup__input popup__input_type_card-name"

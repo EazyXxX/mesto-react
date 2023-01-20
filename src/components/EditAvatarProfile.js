@@ -1,8 +1,14 @@
 import React from "react";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarProfile({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarProfile({
+  isOpen,
+  onClose,
+  onUpdateAvatar,
+  overlayClick,
+  onEscPress,
+}) {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
@@ -28,6 +34,8 @@ function EditAvatarProfile({ isOpen, onClose, onUpdateAvatar }) {
       onClose={onClose}
       buttonText={"Сохранить"}
       onSubmit={handleSubmit}
+      overlayClick={overlayClick}
+      onEscPress={onEscPress}
     >
       <input
         className="popup__input popup__input_type_avatar-link"
